@@ -109,7 +109,7 @@ class block_demands extends block_base {
 
         $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
                 . " style='color:#731472;font-weight:bold'>";
-        $this->content->text .= "<img src='$CFG->wwwroot/enrol/demands/pix/hourglass.png'"
+        $this->content->text .= "<img src='$CFG->wwwroot/blocks/demands/pix/hourglass.png'"
                 . " height='20' width='20'>";
         $this->content->text .=  " <span style='color:red;font-weight:bold'>$nbwantedcourses"
                 . "</span> $waitingdemands";
@@ -124,7 +124,7 @@ class block_demands extends block_base {
 
         $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
                 . " style='color:#731472;font-weight:bold'>";
-	$this->content->text .= "<img src='$CFG->wwwroot/enrol/demands/pix/file.png'"
+	$this->content->text .= "<img src='$CFG->wwwroot/blocks/demands/pix/file.png'"
                 . " height='20' width='20'>";
 	$this->content->text .=  " <span style='color:red;font-weight:bold'>"
                 . "$nbwantedcoursestraitement</span> $answereddemands";

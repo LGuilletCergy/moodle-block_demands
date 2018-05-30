@@ -61,15 +61,15 @@ class block_demands extends block_base {
 
         $this->content->text = '';
 
-        $teachedcoursesids = $this->get_teached_courses($USER->id);
+        $listenrolsids = $this->get_list_enrols($USER->id);
 
-        if (isset($teachedcoursesids)) {
+        if (isset($listenrolsids)) {
 
             $teacheddemands = 0;
-            foreach ($teachedcoursesids as $teachedcourseid) {
+            foreach ($listenrolsids as $enrolid) {
 
-                $coursenbdemands = $DB->count_records('asked_enrolments',
-                        array('courseid' => $teachedcourseid, 'answer' => ''));
+                $coursenbdemands = $DB->count_records('enrol_demands',
+                        array('enrol' => $enrolid, 'answer' => ''));
                 $teacheddemands += $coursenbdemands;
             }
 
@@ -81,7 +81,7 @@ class block_demands extends block_base {
                 $receiveddemands = get_string('received', 'block_demands');
             }
 
-            $this->content->text .= "<p><a href='$CFG->wwwroot/blocks/enrol_demands/requests.php'"
+            $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
                     . " style='color:#731472;font-weight:bold'>";
             $this->content->text .= "<img src='$CFG->wwwroot/pix/i/enrolusers.png'>";
             $this->content->text .=  " <span style='color:red;font-weight:bold'>"
@@ -91,17 +91,15 @@ class block_demands extends block_base {
                     get_string('mydemands', 'block_demands')."</h4><br>";
         }
 
-        $waitingsql = "SELECT COUNT(ae.id) AS nbr FROM {asked_enrolments} ae, {course} c "
-                . "WHERE ae.studentid=$USER->id AND ae.answer = '' AND ae.courseid = c.id";
-        $nbwantedcourses = $DB->get_record_sql($waitingsql);
+        $nbwantedcourses = $DB->count_records('enrol_demands',
+                array('studentid' => $USER->id, 'answer' => ''));
 
-	$resnbwantedcoursestraitement = "SELECT COUNT(ae.id) AS nbr FROM"
-                . " {asked_enrolments} ae, {course} c "
-                . "WHERE ae.studentid=$USER->id AND ae.answer IN"
-                . " ('Oui', 'Non') AND ae.courseid = c.id";
-	$nbwantedcoursestraitement = $DB->get_record_sql($resnbwantedcoursestraitement);
+        $nbwantedcoursestraitement = $DB->count_records('enrol_demands',
+                array('studentid' => $USER->id, 'answer' => 'Oui')) +
+                $DB->count_records('enrol_demands',
+                array('studentid' => $USER->id, 'answer' => 'Non'));
 
-        if ($nbwantedcourses->nbr > 1) {
+        if ($nbwantedcourses > 1) {
 
             $waitingdemands = get_string('waitingplural', 'block_demands');
         } else {
@@ -109,15 +107,14 @@ class block_demands extends block_base {
             $waitingdemands = get_string('waiting', 'block_demands');
         }
 
-        $s = $this->is_plural($nbwantedcourses->nbr);
-        $this->content->text .= "<p><a href='$CFG->wwwroot/blocks/enrol_demands/requests.php'"
+        $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
                 . " style='color:#731472;font-weight:bold'>";
-        $this->content->text .= "<img src='$CFG->wwwroot/blocks/enrol_demands/pix/hourglass.png'"
+        $this->content->text .= "<img src='$CFG->wwwroot/enrol/demands/pix/hourglass.png'"
                 . " height='20' width='20'>";
-        $this->content->text .=  " <span style='color:red;font-weight:bold'>$nbwantedcourses->nbr"
+        $this->content->text .=  " <span style='color:red;font-weight:bold'>$nbwantedcourses"
                 . "</span> $waitingdemands";
 
-        if ($nbwantedcoursestraitement->nbr > 1) {
+        if ($nbwantedcoursestraitement > 1) {
 
             $answereddemands = get_string('answeredplural', 'block_demands');
         } else {
@@ -125,12 +122,12 @@ class block_demands extends block_base {
             $answereddemands = get_string('answered', 'block_demands');
         }
 
-        $this->content->text .= "<p><a href='$CFG->wwwroot/blocks/enrol_demands/requests.php'"
+        $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
                 . " style='color:#731472;font-weight:bold'>";
-	$this->content->text .= "<img src='$CFG->wwwroot/blocks/enrol_demands/pix/file.png'"
+	$this->content->text .= "<img src='$CFG->wwwroot/enrol/demands/pix/file.png'"
                 . " height='20' width='20'>";
 	$this->content->text .=  " <span style='color:red;font-weight:bold'>"
-                . "$nbwantedcoursestraitement->nbr</span> $answereddemands";
+                . "$nbwantedcoursestraitement</span> $answereddemands";
 
 	//Btn
 	$this->content->text .= "<br><center><u>"
@@ -141,13 +138,13 @@ class block_demands extends block_base {
         return $this->content;
     }
 
-    function get_teached_courses($teacherid) {
+    function get_list_enrols($teacherid) {
 
         global $DB;
 
         $listallassignments = $DB->get_records('role_assignments', array('userid' => $teacherid));
 
-        $courseids = array();
+        $enrolids = array();
 
         foreach ($listallassignments as $assignment) {
 
@@ -156,9 +153,15 @@ class block_demands extends block_base {
             if (has_capability('enrol/demands:managecourseenrolment', $context) &&
                     is_enrolled($context)) {
 
-                if (!in_array ($context->instanceid , $courseids)) {
+                $listenrols = $DB->get_records('enrol',
+                        array('enrol' => 'demands', 'courseid' => $context->instanceid));
 
-                    $courseids[] = $context->instanceid;
+                foreach ($listenrols as $enrol) {
+
+                    if (!in_array ($enrol->id , $enrolids)) {
+
+                        $enrolids[] = $context->instanceid;
+                    }
                 }
             }
         }

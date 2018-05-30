@@ -40,7 +40,7 @@ class block_demands extends block_base {
 
     function applicable_formats() {
 
-        return array('site' => true);
+        return array('my' => true);
     }
 
     function get_content() {

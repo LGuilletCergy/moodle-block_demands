@@ -150,17 +150,20 @@ class block_demands extends block_base {
 
             $context = context::instance_by_id($assignment->contextid);
 
-            if (has_capability('enrol/demands:managecourseenrolment', $context) &&
-                    is_enrolled($context)) {
+            if ($context->contextlevel == CONTEXT_COURSE) {
 
-                $listenrols = $DB->get_records('enrol',
-                        array('enrol' => 'demands', 'courseid' => $context->instanceid));
+                if (has_capability('enrol/demands:managecourseenrolment', $context) &&
+                        is_enrolled($context)) {
 
-                foreach ($listenrols as $enrol) {
+                    $listenrols = $DB->get_records('enrol',
+                            array('enrol' => 'demands', 'courseid' => $context->instanceid));
 
-                    if (!in_array ($enrol->id , $enrolids)) {
+                    foreach ($listenrols as $enrol) {
 
-                        $enrolids[] = $context->instanceid;
+                        if (!in_array ($enrol->id , $enrolids)) {
+
+                            $enrolids[] = $context->instanceid;
+                        }
                     }
                 }
             }

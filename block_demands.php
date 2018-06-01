@@ -168,7 +168,8 @@ class block_demands extends block_base {
                 }
             }
         }
-        return $courseids;
+
+        return $listenrols;
     }
 }
 

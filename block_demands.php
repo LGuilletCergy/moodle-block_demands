@@ -74,22 +74,25 @@ class block_demands extends block_base {
                 $teacheddemands += $coursenbdemands;
             }
 
-            if ($teacheddemands > 1) {
+            if ($teacheddemands > 0) {
 
-                $receiveddemands = get_string('receivedplural', 'block_demands');
-            } else {
+                if ($teacheddemands > 1) {
 
-                $receiveddemands = get_string('received', 'block_demands');
+                    $receiveddemands = get_string('receivedplural', 'block_demands');
+                } else {
+
+                    $receiveddemands = get_string('received', 'block_demands');
+                }
+
+                $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
+                        . " style='color:#731472;font-weight:bold'>";
+                $this->content->text .= "<img src='$CFG->wwwroot/pix/i/enrolusers.png'>";
+                $this->content->text .=  " <span style='color:red;font-weight:bold'>"
+                        . "$teacheddemands</span> $receiveddemands";
+                $this->content->text .= "</a></p>";
+                $this->content->text .= "<hr></hr><h4 style='color:#731472;'>".
+                        get_string('mydemands', 'block_demands')."</h4><br>";
             }
-
-            $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
-                    . " style='color:#731472;font-weight:bold'>";
-            $this->content->text .= "<img src='$CFG->wwwroot/pix/i/enrolusers.png'>";
-            $this->content->text .=  " <span style='color:red;font-weight:bold'>"
-                    . "$teacheddemands</span> $receiveddemands";
-            $this->content->text .= "</a></p>";
-            $this->content->text .= "<hr></hr><h4 style='color:#731472;'>".
-                    get_string('mydemands', 'block_demands')."</h4><br>";
         }
 
         $nbwantedcourses = $DB->count_records('enrol_demands',

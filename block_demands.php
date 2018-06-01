@@ -92,7 +92,7 @@ class block_demands extends block_base {
         }
 
         $nbwantedcourses = $DB->count_records('enrol_demands',
-                array('studentid' => $USER->id, 'answer' => ''));
+                array('studentid' => $USER->id, 'answer' => null));
 
         $nbwantedcoursestraitement = $DB->count_records('enrol_demands',
                 array('studentid' => $USER->id, 'answer' => 'Oui')) +
@@ -145,6 +145,8 @@ class block_demands extends block_base {
         $listallassignments = $DB->get_records('role_assignments', array('userid' => $teacherid));
 
         $enrolids = array();
+
+        $listenrols = null;
 
         foreach ($listallassignments as $assignment) {
 

@@ -70,6 +70,7 @@ class block_demands extends block_base {
 
                 $coursenbdemands = $DB->count_records('enrol_demands',
                         array('enrolid' => $enrolid, 'answer' => null));
+
                 $teacheddemands += $coursenbdemands;
             }
 
@@ -164,14 +165,14 @@ class block_demands extends block_base {
 
                         if (!in_array ($enrol->id , $enrolids)) {
 
-                            $enrolids[] = $context->instanceid;
+                            $enrolids[] = $enrol->id;
                         }
                     }
                 }
             }
         }
 
-        return $listenrols;
+        return $enrolids;
     }
 }
 

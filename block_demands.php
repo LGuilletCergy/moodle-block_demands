@@ -69,7 +69,7 @@ class block_demands extends block_base {
             foreach ($listenrolsids as $enrolid) {
 
                 $coursenbdemands = $DB->count_records('enrol_demands',
-                        array('enrol' => $enrolid, 'answer' => ''));
+                        array('enrol' => $enrolid, 'answer' => null));
                 $teacheddemands += $coursenbdemands;
             }
 

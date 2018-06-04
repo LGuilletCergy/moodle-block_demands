@@ -32,7 +32,7 @@
  */
 
 $string['pluginname'] = 'Block enrolment demands';
-$string['enrol_demands:addinstance'] = 'Add a new enrolment demands block';
+$string['demands:addinstance'] = 'Add a new enrolment demands block';
 $string['enroldemands'] = 'Enrolment demands';
 $string['receivedplural'] = 'Received';
 $string['received'] = 'Received';

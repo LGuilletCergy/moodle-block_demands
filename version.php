@@ -37,6 +37,5 @@ $plugin->version   = 2018060400;        // The current plugin version (Date: YYY
 $plugin->requires  = 2013110500;        // Requires this Moodle version
 $plugin->component = 'block_demands'; // Full name of the plugin (used for diagnostics)
 $plugin->dependencies = array(
-    'enrol_demands' => 2018053000,   // The enrolment method demands must be present
-    //(version 2018053000).
+    'enrol_demands' => 2018053000,   // The enrolment method demands version 2018053000 must be present.
 );

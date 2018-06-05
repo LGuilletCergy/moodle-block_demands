@@ -31,23 +31,25 @@
  * Define the block
  */
 
+if (MOODLE_INTERNAL || die());
+
 class block_demands extends block_base {
 
-    function init() {
+    public function init() {
 
         $this->title = get_string('enroldemands', 'block_demands');
     }
 
-    function applicable_formats() {
+    public function applicable_formats() {
 
         return array('my' => true);
     }
 
-    function get_content() {
+    public function get_content() {
 
         global $CFG, $DB, $USER;
 
-        if ($this->content !== NULL) {
+        if ($this->content !== null) {
 
             return $this->content;
         }
@@ -87,7 +89,7 @@ class block_demands extends block_base {
                 $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
                         . " style='color:#731472;font-weight:bold'>";
                 $this->content->text .= "<img src='$CFG->wwwroot/pix/i/enrolusers.png'>";
-                $this->content->text .=  " <span style='color:red;font-weight:bold'>"
+                $this->content->text .= " <span style='color:red;font-weight:bold'>"
                         . "$teacheddemands</span> $receiveddemands";
                 $this->content->text .= "</a></p>";
                 $this->content->text .= "<hr></hr><h4 style='color:#731472;'>".
@@ -115,7 +117,7 @@ class block_demands extends block_base {
                 . " style='color:#731472;font-weight:bold'>";
         $this->content->text .= "<img src='$CFG->wwwroot/blocks/demands/pix/hourglass.png'"
                 . " height='20' width='20'>";
-        $this->content->text .=  " <span style='color:red;font-weight:bold'>$nbwantedcourses"
+        $this->content->text .= " <span style='color:red;font-weight:bold'>$nbwantedcourses"
                 . "</span> $waitingdemands";
 
         if ($nbwantedcoursestraitement > 1) {
@@ -128,12 +130,11 @@ class block_demands extends block_base {
 
         $this->content->text .= "<p><a href='$CFG->wwwroot/enrol/demands/requests.php'"
                 . " style='color:#731472;font-weight:bold'>";
-	$this->content->text .= "<img src='$CFG->wwwroot/blocks/demands/pix/file.png'"
+        $this->content->text .= "<img src='$CFG->wwwroot/blocks/demands/pix/file.png'"
                 . " height='20' width='20'>";
-	$this->content->text .=  " <span style='color:red;font-weight:bold'>"
+        $this->content->text .=  " <span style='color:red;font-weight:bold'>"
                 . "$nbwantedcoursestraitement</span> $answereddemands";
 
-	//Btn
 	$this->content->text .= "<br><center><u>"
                 . "<a href= '$CFG->wwwroot/course/index.php'>".
                 get_string('adddemand', 'block_demands')."</a></u></center>";
@@ -142,7 +143,7 @@ class block_demands extends block_base {
         return $this->content;
     }
 
-    function get_list_enrols($teacherid) {
+    public function get_list_enrols($teacherid) {
 
         global $DB;
 

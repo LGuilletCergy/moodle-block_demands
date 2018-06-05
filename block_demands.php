@@ -31,7 +31,7 @@
  * Define the block
  */
 
-if (MOODLE_INTERNAL || die());
+MOODLE_INTERNAL || die();
 
 class block_demands extends block_base {
 
@@ -132,13 +132,13 @@ class block_demands extends block_base {
                 . " style='color:#731472;font-weight:bold'>";
         $this->content->text .= "<img src='$CFG->wwwroot/blocks/demands/pix/file.png'"
                 . " height='20' width='20'>";
-        $this->content->text .=  " <span style='color:red;font-weight:bold'>"
+        $this->content->text .= " <span style='color:red;font-weight:bold'>"
                 . "$nbwantedcoursestraitement</span> $answereddemands";
 
-	$this->content->text .= "<br><center><u>"
+        $this->content->text .= "<br><center><u>"
                 . "<a href= '$CFG->wwwroot/course/index.php'>".
                 get_string('adddemand', 'block_demands')."</a></u></center>";
-	$this->content->text .= "</a></p>";
+        $this->content->text .= "</a></p>";
 
         return $this->content;
     }

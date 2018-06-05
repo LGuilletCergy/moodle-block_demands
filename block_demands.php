@@ -31,7 +31,7 @@
  * Define the block
  */
 
-MOODLE_INTERNAL || die();
+defined('MOODLE_INTERNAL') || die;
 
 class block_demands extends block_base {
 

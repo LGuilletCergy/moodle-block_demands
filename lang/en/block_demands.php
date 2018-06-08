@@ -41,5 +41,5 @@ $string['waitingplural'] = 'Waiting';
 $string['waiting'] = 'Waiting';
 $string['answeredplural'] = 'Answered';
 $string['answered'] = 'Answered';
-$string['adddemand'] = 'Add a demand';
+$string['adddemand'] = 'Add a demand ';
 

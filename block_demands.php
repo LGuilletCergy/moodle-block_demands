@@ -135,10 +135,9 @@ class block_demands extends block_base {
         $this->content->text .= " <span style='color:red;font-weight:bold'>"
                 . "$nbwantedcoursestraitement</span> $answereddemands";
 
-        $this->content->text .= "<br><center><u>"
+        $this->content->footer .= ""
                 . "<a href= '$CFG->wwwroot/course/index.php'>".
-                get_string('adddemand', 'block_demands')."</a></u></center>";
-        $this->content->text .= "</a></p>";
+                get_string('adddemand', 'block_demands')."</a>";
 
         return $this->content;
     }

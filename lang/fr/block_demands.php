@@ -42,6 +42,8 @@ $string['waiting'] = 'En attente';
 $string['answeredplural'] = 'Traitées';
 $string['answered'] = 'Traitée';
 $string['adddemand'] = 'Ajouter une demande...';
+$string['privacy:metadata'] = 'Le bloc ne fait qu\'afficher '
+        . 'les données stockées par le plugin d\'inscription.';
 
 
 

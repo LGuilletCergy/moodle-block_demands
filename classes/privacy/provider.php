@@ -27,20 +27,25 @@
  * @copyright 2018 Laurent Guillet <laurent.guillet@u-cergy.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * File : lang/en/blockdemands.php
- * Language file
+ * File : version.php
+ * Version file
  */
 
-$string['pluginname'] = 'Block enrolment demands';
-$string['demands:addinstance'] = 'Add a new enrolment demands block';
-$string['enroldemands'] = 'Enrolment demands';
-$string['receivedplural'] = 'Received';
-$string['received'] = 'Received';
-$string['mydemands'] = 'My demands';
-$string['waitingplural'] = 'Waiting';
-$string['waiting'] = 'Waiting';
-$string['answeredplural'] = 'Answered';
-$string['answered'] = 'Answered';
-$string['adddemand'] = 'Add a demand...';
-$string['privacy:metadata'] = 'The block only display data stored by the enrolment plugin.';
+defined('MOODLE_INTERNAL') || die();
 
+namespace block_demands\privacy;
+
+class provider implements
+    // This plugin does not store any personal user data.
+    \core_privacy\local\metadata\null_provider {
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}

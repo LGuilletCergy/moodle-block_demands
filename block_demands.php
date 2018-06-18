@@ -62,6 +62,7 @@ class block_demands extends block_base {
         }
 
         $this->content->text = '';
+        $this->content->footer = '';
 
         $listenrolsids = $this->get_list_enrols($USER->id);
 
@@ -135,7 +136,7 @@ class block_demands extends block_base {
         $this->content->text .= " <span style='color:red;font-weight:bold'>"
                 . "$nbwantedcoursestraitement</span> $answereddemands";
 
-        $this->footer .= ""
+        $this->content->footer .= ""
                 . "<a href= '$CFG->wwwroot/course/index.php'>".
                 get_string('adddemand', 'block_demands')."</a>";
 
